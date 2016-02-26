@@ -1,0 +1,33 @@
+{
+  "name": "sliden",
+  "version": "0.1.0",
+  "description": "Yet another image gallery... or not?",
+  "main": "sliden.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "image",
+    "slider",
+    "gallery",
+    "photo",
+    "slide"
+  ],
+  "author": "happyCoda",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.0.5",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.1",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0"
+  }
+}

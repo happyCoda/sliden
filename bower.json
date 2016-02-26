@@ -1,0 +1,28 @@
+{
+  "name": "sliden",
+  "description": "Yet another image gallery... or not?",
+  "main": "sliden.js",
+  "authors": [
+    "happyCoda"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "image",
+    "slider",
+    "gallery",
+    "photo",
+    "slide"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "^2.2.1"
+  }
+}
