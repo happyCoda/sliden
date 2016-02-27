@@ -15,7 +15,8 @@
     "Utils": true,
     "Ui": true,
     "MVC": true,
-    "module": true
+    "module": true,
+    "__dirname": true
   },
   "sub": true
 }

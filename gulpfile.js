@@ -7,8 +7,10 @@ var gulp = require('gulp'),
   jshint = require('gulp-jshint'),
   jscs = require('gulp-jscs'),
   uglify = require('gulp-uglify'),
+  webServer = require('gulp-webserver'),
   browserify = require('browserify'),
   vinyl = require('vinyl-source-stream'),
+  KarmaServer = require('karma').Server,
   paths = {
     js: {
       src: 'js/src/*.js',
@@ -32,4 +34,29 @@ gulp.task('bundle', function () {
   return browserify('js/src/sliden.js').bundle()
     .pipe(vinyl('sliden.min.js'))
     .pipe(gulp.dest(paths.js.dest));
+});
+
+gulp.task('tdd', function (done) {
+  return new KarmaServer({
+    configFile: __dirname + '/test/karma.conf.js',
+    singleRun: false
+  }, done).start();
+});
+
+gulp.task('server', function () {
+  gulp.src('./')
+    .pipe(webServer({
+      livereload: true,
+      port: 1337
+    }));
+});
+
+gulp.task('observe', ['server'], function () {
+  gulp.watch([
+    paths.js.src,
+    paths.js.dest,
+    paths.css.dest
+  ], function (evt) {
+    util.log(util.colors.yellow('File – ' + evt.path + ' has been changed...'));
+  });
 });
