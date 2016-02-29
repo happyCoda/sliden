@@ -2,7 +2,7 @@
 
 function Iterator (storage) {
   this.storage = storage;
-  this.pointer = 0;
+  this.pointer = 1;
 }
 
 Iterator.prototype.next = function () {
