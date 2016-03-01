@@ -1,5 +1,37 @@
 .container {
+  width: 1200px;
   margin: 50px auto;
   padding: 10px;
   background: #ffffff;
+}
+
+.gallery {
+  width: 400px;
+  margin: 50px auto;
+  display: flex;
+  background: #bbbbbb;
+
+  &-next-btn,
+  &-prev-btn {
+    width: 50px;
+    height: 50px;
+    color: #ffffff;
+    font-size: 40px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+    background: #225588;
+  }
+
+  &-prev-btn {
+    order: 1;
+  }
+
+  & img {
+    order: 2;
+  }
+
+  &-next-btn {
+    order: 3;
+  }
 }

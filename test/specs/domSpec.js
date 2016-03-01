@@ -28,18 +28,12 @@ describe('Dom module suite', function () {
 
     dom = new DOM(options.selectors);
     sl = new Sliden(options);
-
-    dom._add(sl);
   });
 
   it('should grab target dom elements', function () {
     expect(dom.$el.get(0)).toBeInDOM();
     expect(dom.$nextBtn.get(0)).toBeInDOM();
     expect(dom.$prevBtn.get(0)).toBeInDOM();
-  });
-
-  it('should add subscribers to the list', function () {
-    expect(dom.subscribers.length).toBeGreaterThan(0);
   });
 
   it('should call bindEvents method', function () {
@@ -57,14 +51,58 @@ describe('Dom module suite', function () {
     dom.$nextBtn.trigger('click');
 
     expect(dom.notify).toHaveBeenCalled();
+    expect(dom.notify).toHaveBeenCalledWith('next');
   });
 
   it('should call subscribers recieve methods inside of notify method', function () {
+    sl.subscribe(dom);
+
     spyOn(sl, 'recieve');
 
     dom.notify('next');
 
     expect(sl.recieve).toHaveBeenCalled();
+    expect(sl.recieve).toHaveBeenCalledWith('next');
+  });
+
+  it('should implement createImage method', function () {
+
+    dom.createImage();
+
+    expect(dom.$el.find('img').get(0)).toBeInDOM();
+
+  });
+
+  it('should implement clearImage method', function () {
+
+    dom.createImage();
+
+    dom.clearImage();
+
+    expect(dom.$el.find('img').get(0)).not.toBeInDOM();
+  });
+
+  it('should call clearImage before createImage', function () {
+
+    spyOn(dom, 'clearImage');
+
+    dom.recieve({
+      item: 'http://super.image.jpg'
+    })
+
+    expect(dom.clearImage).toHaveBeenCalled();
+  });
+
+  it('should implement subscribers list', function () {
+
+    expect(dom._subscribers).toBeDefined();
+  });
+
+  it('should add subscribers to the list', function () {
+
+    sl.subscribe(dom);
+
+    expect(dom._subscribers.length).toBeGreaterThan(0);
   });
 
 });

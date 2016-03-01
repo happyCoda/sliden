@@ -37,16 +37,17 @@ gulp.task('bundle', function () {
   return browserify('js/src/app.js').bundle()
     .pipe(vinylSource('sliden.min.js'))
     .pipe(vinylBuffer())
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(sourceMap.init())
     .pipe(sourceMap.write('./'))
     .pipe(gulp.dest(paths.js.dest));
 });
 
 gulp.task('tdd', function (done) {
+
   return new KarmaServer({
     configFile: __dirname + '/test/karma.conf.js',
-    singleRun: true
+    singleRun: false
   }, done).start();
 });
 
