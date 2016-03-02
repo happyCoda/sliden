@@ -1,63 +1,52 @@
 'use strict';
 
-function DOM(options) {
-  this.subscribers = [];
-  this.$el = $(options.el);
-  this.$nextBtn = $(options.nextBtn);
-  this.$prevBtn = $(options.prevBtn);
+var Klass = require('./klass'),
+  Channel = require('./channel'),
+  Observer = require('./observer'),
+  DOM;
 
-  this._subscribers = [];
+DOM = Klass(new Channel, new Observer(), {
+  initialize: function (options) {
+      this.$el = $(options.el);
+      this.$nextBtn = $(options.nextBtn);
+      this.$prevBtn = $(options.prevBtn);
 
-  this._bindEvents();
-}
+      this._bindEvents();
+  },
 
-DOM.prototype.subscribe = function (broadcaster) {
-  broadcaster._add(this);
-};
+  recieve: function (message) {
+    if (typeof message === 'object') {
 
-DOM.prototype._add = function (subscriber) {
+      this.clearImage();
 
-  this._subscribers.push(subscriber);
-};
+      this.createImage(message.item);
 
-DOM.prototype.notify = function (message) {
-  this._subscribers.forEach(function (subscriber) {
+    }
+  },
 
-    subscriber.recieve(message);
-  });
-};
+  _bindEvents: function () {
 
-DOM.prototype.recieve = function (message) {
-  if (typeof message === 'object') {
+    var eventHandler = function (message) {
 
-    this.clearImage();
+      this.notify(message);
+    };
 
-    this.createImage(message.item);
+    this.$nextBtn.on('click', eventHandler.bind(this, 'next'));
+    this.$prevBtn.on('click', eventHandler.bind(this, 'prev'));
+  },
 
+  createImage: function (src) {
+    var img = $('<img>', {
+      'src': src
+    });
+
+    this.$el.append(img);
+  },
+
+  clearImage: function () {
+    this.$el.find('img').remove();
   }
-};
 
-DOM.prototype._bindEvents = function () {
-
-  var eventHandler = function (message) {
-
-    this.notify(message);
-  };
-
-  this.$nextBtn.on('click', eventHandler.bind(this, 'next'));
-  this.$prevBtn.on('click', eventHandler.bind(this, 'prev'));
-};
-
-DOM.prototype.createImage = function (src) {
-  var img = $('<img>', {
-    'src': src
-  });
-
-  this.$el.append(img);
-};
-
-DOM.prototype.clearImage = function () {
-  this.$el.find('img').remove();
-};
+});
 
 module.exports = DOM;

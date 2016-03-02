@@ -6,9 +6,6 @@ module.exports = function (config) {
     reporters: ['spec'],
     logLevel: config.LOG_ERROR,
     browsers: ['PhantomJS'],
-    browserify: {
-      debug: true
-    },
     preprocessors: {
       'specs/*Spec.js': ['browserify']
     },

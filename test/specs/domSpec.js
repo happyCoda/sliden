@@ -30,6 +30,12 @@ describe('Dom module suite', function () {
     sl = new Sliden(options);
   });
 
+  it('should implement initialize method', function () {
+
+    expect(dom.initialize).toBeDefined();
+
+  });
+
   it('should grab target dom elements', function () {
     expect(dom.$el.get(0)).toBeInDOM();
     expect(dom.$nextBtn.get(0)).toBeInDOM();

@@ -1,54 +1,45 @@
 'use strict';
 
-var Iterator = require('./iterator'),
-  DOM = require('./dom');
+var Klass = require('./klass'),
+  Channel = require('./channel'),
+  Observer = require('./observer'),
+  Iterator = require('./iterator'),
+  DOM = require('./dom'),
+  Sliden;
 
-function Sliden(options) {
-  var dom = new DOM(options.selectors),
-    iterator = new Iterator(options.storage);
+Sliden = Klass(new Channel(), new Observer(), {
 
-  this._subscribers = [];
+  initialize: function (options) {
+    var dom = new DOM(options.selectors),
+      iterator = new Iterator(options.storage);
 
-  this.subscribe(dom);
+    this.subscribe(dom);
 
-  this.subscribe(iterator);
+    this.subscribe(iterator);
 
-  dom.subscribe(this);
+    dom.subscribe(this);
 
-  iterator.subscribe(this);
-
-  this.notify('getNext');
-
-}
-
-Sliden.prototype.subscribe = function (broadcaster) {
-
-  broadcaster._add(this);
-};
-
-Sliden.prototype._add = function (subscriber) {
-  this._subscribers.push(subscriber);
-};
-
-Sliden.prototype.notify = function (message) {
-  this._subscribers.forEach(function (subscriber) {
-
-    subscriber.recieve(message);
-  });
-};
-
-Sliden.prototype.recieve = function (message) {
-  if (typeof message === 'object') {
-
-    this.notify(message);
-
-  } else if (message === 'next') {
+    iterator.subscribe(this);
 
     this.notify('getNext');
-  } else {
+  },
 
-    this.notify('getPrev');
+  recieve: function (message) {
+
+    if (typeof message === 'object') {
+
+      this.notify(message);
+
+    } else if (message === 'next') {
+
+      this.notify('getNext');
+    } else {
+
+      this.notify('getPrev');
+    }
   }
-};
+});
+
+
 
 module.exports = Sliden;
