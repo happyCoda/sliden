@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+* Class creation module.
+* @module klass
+* @exports Klass
+*/
 function Klass() {
   var args = Array.prototype.slice.call(arguments);
 
